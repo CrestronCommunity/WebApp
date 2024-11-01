@@ -1,0 +1,14 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Build">
+    <!-- Disable crestron post process targets as they don't work right now -->
+    <Target Name="SimplSharpClean" />
+    <Target Name="SimplSharpPostProcess47" />
+    <Target Name="SimplSharpPostProcess" />
+    <!-- This target is used to ignore SimplSharpNewtonsoft.dll -->
+    <Target Name="SimplSharpNewtonsoft" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+        <ItemGroup>
+            <ReferencePath Condition="'%(FileName)' == 'SimplSharpNewtonsoft'">
+                <Aliases>crestron</Aliases>
+            </ReferencePath>
+        </ItemGroup>
+    </Target>
+</Project>

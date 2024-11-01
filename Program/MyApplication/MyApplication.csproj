@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <!-- FriendlyName is truncated to satisfy the 20-character limit -->
+        <FriendlyName>MyApplication</FriendlyName>
+        <Include4Version>2.21.65</Include4Version>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Diagnostics" />
+        <PackageReference Include="Crestron.SimplSharp.SDK.Program" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="Microsoft.Extensions.Logging" />
+        <PackageReference Include="Serilog" />
+        <PackageReference Include="Serilog.Enrichers.Thread" />
+        <PackageReference Include="Serilog.Extensions.Hosting" />
+        <PackageReference Include="Serilog.Settings.Configuration" />
+        <PackageReference Include="Serilog.Sinks.Console" />
+        <PackageReference Include="Serilog.Sinks.File" />
+        <PackageReference Include="SerilogAnalyzer" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="ProgramConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="ProgramConfig.Overrides.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <DependentUpon>ProgramConfig.json</DependentUpon>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\MyApplication.SDK.Common\MyApplication.SDK.Common.csproj" />
+    </ItemGroup>
+    <Import Project="SimplSharpProgram.targets" />
+</Project>

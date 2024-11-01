@@ -1,0 +1,80 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Kestrel": {
+    "EndPoints": {
+      "Http": {
+        "Url": "http://0.0.0.0:8080"
+      }
+    }
+  },
+  "HostConfig": {
+    "Environment": "Development",
+    "ConfigurationPath": "/user/myapp/app{APP_IDENTIFIER}/configuration.json"
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Verbose",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "Using": [
+      "Serilog.Sinks.Console",
+      "Serilog.Sinks.File",
+      "Serilog.Enrichers.Thread"
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithThreadId"
+    ],
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "Path": "/user/myapp/app{APP_IDENTIFIER}/logs/program-.log",
+          "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u}] App:{AppId} Version:{Version} <{SourceContext:l}> Thread:{ThreadId} : {Message} {Properties:j} {NewLine}{Exception}",
+          "RollingInterval": "Day",
+          "FileSizeLimitBytes": "8000000",
+          "RollOnFileSizeLimit": true,
+          "retainedFileCountLimit": null
+        }
+      },
+      {
+        "Name": "Console",
+        "Args": {
+          "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u}] App:{AppId} Version:{Version} <{SourceContext:l}> Thread:{ThreadId} : {Message} {Properties:j} {NewLine}{Exception}",
+          "Theme": "Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme::Code, Serilog.Sinks.Console",
+          "ApplyThemeToRedirectedOutput": true
+        }
+      }
+    ],
+    "Destructure": [
+      {
+        "Name": "ToMaximumDepth",
+        "Args": {
+          "MaximumDestructuringDepth": 6
+        }
+      },
+      {
+        "Name": "ToMaximumStringLength",
+        "Args": {
+          "MaximumStringLength": 255
+        }
+      },
+      {
+        "Name": "ToMaximumCollectionCount",
+        "Args": {
+          "MaximumCollectionCount": 8
+        }
+      }
+    ],
+    "Properties": {}
+  }
+}

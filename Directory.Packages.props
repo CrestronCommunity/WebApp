@@ -1,0 +1,26 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.3.2" />
+        <PackageVersion Include="Crestron.SimplSharp.SDK.Program" Version="2.21.65" />
+        <PackageVersion Include="Crestron.SimplSharp.SDK.ProgramLibrary" Version="2.21.65" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+        <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
+        <PackageVersion Include="Serilog" Version="4.0.0" />
+        <PackageVersion Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+        <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
+        <PackageVersion Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+        <PackageVersion Include="Serilog.Settings.Configuration" Version="3.4.0" />
+        <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageVersion Include="Serilog.Sinks.File" Version="5.0.0" />
+        <PackageVersion Include="SerilogAnalyzer" Version="0.15.0" />
+    </ItemGroup>
+</Project>

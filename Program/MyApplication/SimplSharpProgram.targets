@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Build">
+    <PropertyGroup>
+        <ArchiveExtension>.cpz</ArchiveExtension>
+        <!-- NuGet package dependencies are copied to the output directory -->
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+    <ItemGroup>
+        <DirectoriesToDelete Include="$(OutputPath)" />
+    </ItemGroup>
+    <Target Name="SimplSharpCleanup" AfterTargets="BeforeBuild;AfterClean">
+        <Message Text="### $(MSBuildRuntimeType)' Running SIMPL# Cleanup ###" Importance="high" />
+        <RemoveDir Directories="@(DirectoriesToDelete)" ContinueOnError="true" />
+    </Target>
+    <Target Name="SimplSharpBuildArchive" Condition="'$(MSBuildRuntimeType)' == 'Core' OR '$(MSBuildRuntimeType)' == 'Full'" BeforeTargets="AfterBuild">
+        <Message Text="### Running SIMPL# Build Archive ###" Importance="high" />
+        <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+            <Output TaskParameter="Assemblies" ItemName="Assembly" />
+        </GetAssemblyIdentity>
+        <SimplSharpBuildArchive include4Version="$(Include4Version)"
+                                programInfoFilePath="$(OutputPath)\ProgramInfo.config"
+                                targetName="$(TargetName)"
+                                friendlyName="$(FriendlyName)"
+                                outputPath="$(OutputPath)"
+                                archiveExtension="$(ArchiveExtension)"
+                                excludeTargets="$(MSBuildThisFileFullPath)"
+                                assemblyVersion="%(Assembly.Version)"
+                                targetFramework="$(TargetFrameworkVersion)" />
+    </Target>
+    <UsingTask TaskName="SimplSharpBuildArchive" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <include4Version ParameterType="System.String" Required="true" />
+            <programInfoFilePath ParameterType="System.String" Required="true" />
+            <friendlyName ParameterType="System.String" Required="true" />
+            <targetName ParameterType="System.String" Required="true" />
+            <outputPath ParameterType="System.String" Required="true" />
+            <archiveExtension ParameterType="System.String" Required="true" />
+            <excludeTargets ParameterType="System.String" Required="true" />
+            <assemblyVersion ParameterType="System.String" Required="true" />
+            <targetFramework Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.IO.Compression" />
+            <Using Namespace="System.Xml" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+
+try
+{
+   // Create ProgramInfo.config XML file.
+   var xmlDoc = new XmlDocument();
+   var root = xmlDoc.CreateElement("ProgramInfo");
+   xmlDoc.AppendChild(root);
+
+   var required = xmlDoc.CreateElement("RequiredInfo");
+   root.AppendChild(required);
+
+   required.AppendChild(xmlDoc.CreateElement("FriendlyName"))
+      .AppendChild(xmlDoc.CreateTextNode(friendlyName.Substring(0, Math.Min(friendlyName.Length, 20))));
+
+   required.AppendChild(xmlDoc.CreateElement("SystemName"))
+      .AppendChild(xmlDoc.CreateTextNode(targetName));
+
+   required.AppendChild(xmlDoc.CreateElement("EntryPoint"))
+      .AppendChild(xmlDoc.CreateTextNode(targetName));
+
+   required.AppendChild(xmlDoc.CreateElement("DesignToolId"))
+      .AppendChild(xmlDoc.CreateTextNode("6"));
+
+   required.AppendChild(xmlDoc.CreateElement("ProgramToolId"))
+      .AppendChild(xmlDoc.CreateTextNode("6"));
+
+   required.AppendChild(xmlDoc.CreateElement("TargetFramework"))
+      .AppendChild(xmlDoc.CreateTextNode(targetFramework));
+
+   var optional = xmlDoc.CreateElement("OptionalInfo");
+   root.AppendChild(optional);
+
+   var fileInfo = new FileInfo(Path.Combine(outputPath, targetName + ".dll"));
+   optional.AppendChild(xmlDoc.CreateElement("CompiledOn"))
+      .AppendChild(xmlDoc.CreateTextNode(fileInfo.LastWriteTime.ToString("yyyy-MM-dd'T'HH:mm:ss.fffK")));
+
+   optional.AppendChild(xmlDoc.CreateElement("AssemblyVersion"))
+      .AppendChild(xmlDoc.CreateTextNode(assemblyVersion));
+
+   var plugin = xmlDoc.CreateElement("Plugin");
+   root.AppendChild(plugin);
+
+   plugin.AppendChild(xmlDoc.CreateElement("Include4.dat"))
+      .AppendChild(xmlDoc.CreateTextNode(include4Version));
+
+   xmlDoc.Save(programInfoFilePath);
+
+   // SimplSharpData.dat is required for SimplSharpPro.exe to load the program.
+   File.Create(Path.Combine(outputPath, "SimplSharpData.dat")).Dispose();
+
+   string archiveName = Path.Combine(outputPath, targetName + archiveExtension);
+
+   // Delete archive if it already exists.
+   if (File.Exists(archiveName))
+      File.Delete(archiveName);
+
+    using Stream zipStream = new FileStream(Path.GetFullPath(archiveName), FileMode.Create, FileAccess.Write);
+    using var archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
+    foreach (var fileName in Directory.GetFiles(outputPath, "*.*", SearchOption.TopDirectoryOnly))
+    {
+        if (fileName.Equals(archiveName, StringComparison.OrdinalIgnoreCase)
+            || fileName.Equals(excludeTargets, StringComparison.OrdinalIgnoreCase)
+            || Path.GetExtension(fileName).Equals(archiveExtension))
+            continue;
+
+        using var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        using var outputStream = archive.CreateEntry(Path.GetFileName(fileName)).Open();
+        fileStream.CopyTo(outputStream);
+    }
+}
+catch (Exception ex)
+{
+   Log.LogErrorFromException(ex);
+}
+
+]]>
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>

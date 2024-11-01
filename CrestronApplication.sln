@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication", "Program\MyApplication\MyApplication.csproj", "{8639FD98-721E-45FD-B324-098E1C187979}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B9BBB77-D3BC-493C-8825-ACF25EAD16FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{98E3260E-4F79-467E-A8B6-DACD5F27C11F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9CE63869-8DC6-4C24-8826-88A459BE061D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Program", "Program", "{34CA90F5-C1A8-4C80-9131-D7CA16DE0E69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{C3995B40-5B22-4DB0-B176-49CA12D696AA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		nuget.config = nuget.config
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication.SDK.Common", "MyApplication.SDK.Common\MyApplication.SDK.Common.csproj", "{3ED060BA-46B4-49A5-A15A-BE897588D282}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8639FD98-721E-45FD-B324-098E1C187979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8639FD98-721E-45FD-B324-098E1C187979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8639FD98-721E-45FD-B324-098E1C187979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8639FD98-721E-45FD-B324-098E1C187979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ED060BA-46B4-49A5-A15A-BE897588D282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ED060BA-46B4-49A5-A15A-BE897588D282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ED060BA-46B4-49A5-A15A-BE897588D282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ED060BA-46B4-49A5-A15A-BE897588D282}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98E3260E-4F79-467E-A8B6-DACD5F27C11F} = {8B9BBB77-D3BC-493C-8825-ACF25EAD16FD}
+		{9CE63869-8DC6-4C24-8826-88A459BE061D} = {8B9BBB77-D3BC-493C-8825-ACF25EAD16FD}
+		{34CA90F5-C1A8-4C80-9131-D7CA16DE0E69} = {8B9BBB77-D3BC-493C-8825-ACF25EAD16FD}
+		{8639FD98-721E-45FD-B324-098E1C187979} = {34CA90F5-C1A8-4C80-9131-D7CA16DE0E69}
+		{3ED060BA-46B4-49A5-A15A-BE897588D282} = {9CE63869-8DC6-4C24-8826-88A459BE061D}
+	EndGlobalSection
+EndGlobal
