@@ -1,5 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication.SDK.Common", "Library\MyApplication.SDK.Common\MyApplication.SDK.Common.csproj", "{3ED060BA-46B4-49A5-A15A-BE897588D282}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication", "Program\MyApplication\MyApplication.csproj", "{8639FD98-721E-45FD-B324-098E1C187979}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B9BBB77-D3BC-493C-8825-ACF25EAD16FD}"
@@ -20,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		nuget.config = nuget.config
 		.gitignore = .gitignore
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication.SDK.Common", "MyApplication.SDK.Common\MyApplication.SDK.Common.csproj", "{3ED060BA-46B4-49A5-A15A-BE897588D282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
