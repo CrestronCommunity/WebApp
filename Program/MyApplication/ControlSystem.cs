@@ -3,7 +3,6 @@ using MyApplication.SDK.Common;
 using Crestron.SimplSharp;
 using Crestron.SimplSharpPro;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,12 +23,6 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
         Console.SetOut(_consoleWriter);
         GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
         Crestron.SimplSharpPro.CrestronThread.Thread.MaxNumberOfUserThreads = 400;
-        TaskScheduler.UnobservedTaskException += (_, args) =>
-        {
-            ILogger logger = Log.ForContext<TaskScheduler>();
-            logger.Error(args.Exception, "An unobserved task exception occurred");
-        };
-
         CrestronEnvironment.ProgramStatusEventHandler += ProgramStatusEventHandler;
     }
 
@@ -93,20 +86,10 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
             services.AddHostedService<ProgramService>();
 
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
         }
 
         var app = builder.Build();
         {
-            HostConfig hostConfig = builder.Configuration.GetSectionOrThrow<HostConfig>("HostConfig");
-
-            // Configure the HTTP request pipeline.
-            if (hostConfig.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
             app.MapGet("/hello", () => "Hello world!")
                 .WithName("GetHello")
                 .WithOpenApi();

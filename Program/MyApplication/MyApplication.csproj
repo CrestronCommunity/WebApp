@@ -5,8 +5,11 @@
         <Include4Version>2.21.65</Include4Version>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Diagnostics" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="Crestron.SimplSharp.SDK.Program" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.Extensions.Configuration" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
@@ -19,8 +22,6 @@
         <PackageReference Include="Serilog.Sinks.Console" />
         <PackageReference Include="Serilog.Sinks.File" />
         <PackageReference Include="SerilogAnalyzer" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-        <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
     <ItemGroup>
         <None Update="ProgramConfig.json">

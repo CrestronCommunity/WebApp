@@ -18,6 +18,8 @@ public sealed class ProgramService : BackgroundService
         _logger = logger;
         _controlSystemContext = controlSystemContext;
         _hostConfig = hostConfig.Value;
+
+        TaskScheduler.UnobservedTaskException += (_, args) => logger.LogError(args.Exception, "An unobserved task exception occurred");
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
