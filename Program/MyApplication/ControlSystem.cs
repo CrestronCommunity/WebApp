@@ -110,16 +110,16 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
             app.MapGet("/hello", () => "Hello world!")
                 .WithName("GetHello")
                 .WithOpenApi();
-        }
 
-        app.Lifetime.ApplicationStarted.Register(() =>
-        {
-            foreach (var url in app.Urls)
+            app.Lifetime.ApplicationStarted.Register(() =>
             {
-                var port = new Uri(url).Port;
-                PortForwardFactory.TryCreateTcp(new PortForward(port));
-            }
-        });
+                foreach (var url in app.Urls)
+                {
+                    var port = new Uri(url).Port;
+                    PortForwardFactory.TryCreateTcp(new PortForward(port));
+                }
+            });
+        }
 
         await app.RunAsync(token).ConfigureAwait(false);
     }
