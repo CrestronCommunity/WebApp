@@ -63,7 +63,7 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
 
     private async Task RunAsync(CancellationToken token)
     {
-        var builder = WebApplication.CreateBuilder(new WebApplicationOptions { ApplicationName = "MyApplication" });
+        var builder = WebApplication.CreateBuilder();
 
         // Configure application configuration
         builder.Configuration.AddJsonFile("ProgramConfig.json", optional: false, reloadOnChange: false);
