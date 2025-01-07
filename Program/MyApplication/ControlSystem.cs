@@ -33,7 +33,6 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
             try
             {
                 await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
-                await UpdateConfigurationAsync("ProgramConfig.json", "ProgramConfig.Overrides.json").ConfigureAwait(false);
                 await RunAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -41,17 +40,6 @@ public sealed class ControlSystem : CrestronControlSystem, IDisposable
                 ErrorLog.Exception("An error occurred while running the application", ex);
             }
         });
-    }
-
-    private static async Task UpdateConfigurationAsync(params string[] fileNames)
-    {
-        foreach (var fileName in fileNames)
-        {
-            var configurationPath = Path.Combine(ApplicationEnvironment.ProgramDirectory, fileName);
-            var programConfig = await File.ReadAllTextAsync(configurationPath).ConfigureAwait(false);
-            programConfig = programConfig.Replace("{APP_IDENTIFIER}", ApplicationEnvironment.AppIdentifier, StringComparison.Ordinal);
-            await File.WriteAllTextAsync(configurationPath, programConfig).ConfigureAwait(false);
-        }
     }
 
     private async Task RunAsync(CancellationToken token)
