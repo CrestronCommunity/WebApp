@@ -15,7 +15,7 @@
   },
   "HostConfig": {
     "Environment": "Development",
-    "ConfigurationPath": "/user/myapp/app{APP_IDENTIFIER}/configuration.json"
+    "ConfigurationPath": "/user/myapp/app01/configuration.json"
   },
   "Serilog": {
     "MinimumLevel": {
@@ -38,7 +38,7 @@
       {
         "Name": "File",
         "Args": {
-          "Path": "/user/myapp/app{APP_IDENTIFIER}/logs/program-.log",
+          "Path": "/user/myapp/app01/logs/program-.log",
           "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u}] App:{AppId} Version:{Version} <{SourceContext:l}> Thread:{ThreadId} : {Message} {Properties:j} {NewLine}{Exception}",
           "RollingInterval": "Day",
           "FileSizeLimitBytes": "8000000",
